@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IOH 直播連結懶人產生器</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" />
+    <style type="text/css">
+        body {
+            font-family: Microsoft JhengHei;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.5/clipboard.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>直播貼址？一鍵搞定！</h1>
+        </div>
+    
+    
+    <!--<script src="https://gist.github.com/WeiChiaChang/54017c614c980fc6e50b.js"></script>-->
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        // function ChangeString(){
+        //     var NewStringValue=document.getElementById("StringTextBox").value;
+            // var regexp = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
+            // var match = NewStringValue.match(regexp);
+            // var New_new = NewStringValue.replace("http://youtu.be/", ""); 
+            // var youtube_link = "https://www.youtube.com/embed/";
+            // if ( match && match[7].length == 11 ){
+            //     document.getElementById("NewStringBox").innerHTML = match[7];
+            // }else{
+            //     alert("Could not extract video ID.");
+            // }
+            
+        // }
+        
+        // function youtube_parser(){
+        //     var url = document.getElementById("TextBox").value;
+        //     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        //     var match = url.match(regExp);
+        //     var result = match && match[7].length == 11;
+        //     var youtube_prefix = "https://www.youtube.com/embed/";
+        //     var final = youtube_prefix + match[7];
+        //     document.getElementById("NewStringBox").innerHTML = htmlText;
+        //     // return (match&&match[7].length==11)? match[7] : false;
+        // }
+        
+        // function extractVideoID(url){
+        //     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        //     var match = url.match(regExp);
+        //     if ( match && match[7].length == 11 ){
+        //         return match[7];
+        //     }else{
+        //         alert("Could not extract video ID.");
+        //     }
+        // }
+    </script>
+    
+    <!--<textarea >-->
+    <!--<div class="form-group">-->
+    
+    <!--</div>-->
+    <!--</textarea>-->
+    
+    <br>
+    <!--<form>-->
+    <!--<div class="row">-->
+        <!--<div class="form-group col-xs-4 col-lg-2">-->
+        <!--<input type="text" id="TextBox" placeholder="請在此輸入youtube網址">-->
+        <!--<input type="button" value="快按我啦" onclick="youtube_parser()">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--</form>-->
+        <form class="form-inline">
+            <div class="row">
+            <div class="col-xs-4">
+              <!--<label for="TextBox">我是框框</label>-->
+              <input class="form-control form-inline" type="text" id="TextBox" placeholder="請在此輸入youtube網址">
+              <button type="button" class="btn btn-primary" onclick="youtube_parser()">送出</button>
+            </div>
+            </div>
+        </form>
+        <br><br>
+        <div class="form-control" style="height: 100px;">
+            <p id="NewStringBox">請複製這段程式碼</p>
+        </div>
+        
+        <!--<button class="btn" data-clipboard-target="#TextBox">-->
+        <!--    <img width="50" height="50" src="http://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/iMac-icon.png" alt="複製到剪貼簿">-->
+        <!--</button>-->
+        
+         <!--Target -->
+        <!--<input id="foo" value="https://github.com/zenorocha/clipboard.js.git">-->
+        
+        <!-- Trigger -->
+        <!--<button class="btn" data-clipboard-target="#foo">-->
+        <!--    <img width="50" height="50" src="http://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/iMac-icon.png" alt="Copy to clipboard">-->
+        <!--</button>-->
+    </div>
+    
+</body>
+
+    <script type="text/javascript">
+    
+        function youtube_parser(){
+            var url = document.getElementById("TextBox").value;
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            var result = match && match[7].length == 11;
+            var youtube_prefix = "https://www.youtube.com/embed/";
+            var final = youtube_prefix + match[7];
+            
+            var iframeText  = "<iframe src='";
+                iframeText += final;
+                iframeText += "' id='ytplayer' type='text/html' width='100%' height='500' frameborder='0'/>";
+    
+            var htmlText  = "<script>";
+                htmlText += "<!--";
+                htmlText += "$('#youtube').before(\"" + iframeText + "\");";
+                htmlText += "var id = setInterval(function() {";
+                htmlText += "$('#ytplayer').attr({";
+                htmlText +=   "'width': '100%',";
+                htmlText +=   "'height': '500'";
+                htmlText += "});";
+                htmlText += "var comment = $('#comments');";
+                htmlText += "comment.remove();";
+                htmlText += "$('#youtube').before(comment);";
+      
+                htmlText += "setTimeout(function() {";
+                htmlText +=   "if ($('#ytplayer').attr('width') == '100%')";
+                htmlText +=     "clearInterval(id);";
+                htmlText +=   "}, 2000);";
+                htmlText += " }, 30);";
+                htmlText += "var reloadFb = function(){";
+                htmlText +=   "$('.fb_ltr').attr('src', $('.fb_ltr').attr('src'));";
+                htmlText += "};";
+                htmlText += "setInterval(reloadFb, 30000);";            
+    
+                htmlText += "-->";
+                htmlText += "</script";
+                htmlText += ">";
+                htmlText += "<div id='youtube'></div>";      
+            
+                $('#NewStringBox').text(htmlText);
+                //document.getElementById("NewStringBox").innerHTML = htmlText;
+                // return (match&&match[7].length==11)? match[7] : false;
+        }
+    
+    </script>
+
+</html>
